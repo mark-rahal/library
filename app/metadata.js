@@ -2,6 +2,10 @@ function runningDevEnv() {
     return 'DEV' in process.env;
 }
 
+function runningInDocker() {
+    return 'DOCKER' in process.env;
+}
+
 exports.getConnectionConfig = () => {
     if (runningDevEnv()) {
         var connectionConfig = {
@@ -10,6 +14,9 @@ exports.getConnectionConfig = () => {
             dbPassword: undefined,
             dbName: 'Library'
         };
+        if (runningInDocker()) {
+            connectionConfig.dbHost = 'library-db';
+        }
         return connectionConfig;
     }
     else {

@@ -1,0 +1,40 @@
+version: '3.7'
+
+networks:
+  lib-net:
+    name: lib-net
+    driver: bridge
+
+services:
+  library:
+    build: 
+      context: ./node
+      args: 
+        - ${NODE_VERSION-latest}
+    container_name: library
+    tty: TRUE
+    networks: 
+      - lib-net
+    ports:
+      - '3000:3000'
+    working_dir: /app
+    volumes:
+      - '../app:/app:rw'
+    depends_on:
+      - library-db
+    command: bash -c 'DEV=true DOCKER=true nodemon > /var/log/library.log'
+  
+  library-db:
+    image: mysql:5.7
+    container_name: library-db
+    networks:
+      - lib-net
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=TRUE
+      - MYSQL_DATABASE=Library
+    working_dir: /data
+    volumes:
+      - '../data:/data:rw'
+      - "../mysql:/var/lib/mysql"

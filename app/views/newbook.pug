@@ -1,20 +1,36 @@
 extends layout
 
 block content
-  div(class='container')
-    div(class='row')
+  if info
+    - var bookTitle = info.title
+    - var authors = info.authors
+  else
+    - var bookTitle = ''
+    - var authors = ['']
+  div(class='container h-100')
+    div(class='row align-items-center h-100')
       div(class='col')
-      div(class='col')
-        div(class='card bg-dark mb-3 text-center')
-          img(src='/images/library.jpg' class='card-img-top' alt='An assortment of shelved books')
+      div(class='col col-md-6')
+        div(class='card bg-light text-center')
+          h1(class='display-1') Library
           div(class='card-body')
-            div(class='container')
-              div(class='row')
-                div(class='col-md col-md-offset')
-                  form(name='book-add-form' action='/book/new')
-                    div(class='form-group')
-                      input(type='text' class='form-control' placeholder='Title' value=books[0].volumeInfo.title name='book-title-input')
-                      input(type='text' class='form-control' placeholder='Author' value=books[0].volumeInfo.authors name='book-title-input')
-                    button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') Add Book
+            div(class='card bg-dark mb-3 text-left')
+              img(src='/images/library.jpg' class='card-img-top' alt='An assortment of shelved books')
+              div(class='card-body')
+                div(class='container')
+                  div(class='row')
+                    div(class='col')
+                      if !info
+                        div(class='alert alert-danger' role='alert') Book not found! Please enter the book information manually.
+                      form(name='book-add-form' action='/book/new')
+                        div(class='form-group')
+                          label(class='form-label' for='title-input') Title
+                          input(type='text' id='title-input' class='form-control' placeholder='Title' value=bookTitle name='book-title-input') 
+                        div(class='form-group')
+                          label(class='form-label' for='author-input') Author(s)
+                          //add button to add author form for manual entries
+                          each bookAuthor in authors
+                            input(type='text' id='author-input' class='form-control' placeholder='Author' value=bookAuthor name='book-title-input')
+                        button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') Add Book
       div(class='col')
   script(src='/javascripts/validate.js')

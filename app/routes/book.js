@@ -8,8 +8,14 @@ router.post('/', function(req, res, next) {
             console.log(error);
         }
         else {
-            console.log(response.body);
-            res.render('newbook', {info: response.body});
+            var bookInfo = JSON.parse(response.body);
+            if (bookInfo.totalItems === 0) {
+                //book not found by google books api
+                res.render('newbook', {info: undefined})
+            }
+            else {
+                res.render('newbook', {info: bookInfo.items[0].volumeInfo});
+            }
         }
     });
 });

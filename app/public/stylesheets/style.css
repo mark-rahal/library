@@ -1,6 +1,12 @@
+html {
+  height: 100%;
+}
+
 body {
-  padding: 50px;
+  height: 100%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("../images/bg.jpg");
+  background-size: cover;
 }
 
 a {
@@ -9,4 +15,8 @@ a {
 
 .title {
   text-align: center;
+}
+
+.form-label {
+  color: azure;
 }

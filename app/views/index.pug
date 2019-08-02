@@ -8,9 +8,12 @@ block content
         div(class='card bg-dark mb-3 text-center')
           img(src='/images/library.jpg' class='card-img-top' alt='An assortment of shelved books')
           div(class='card-body')
-            form(name='isbn-form' action='/book')
-              div(class='form-group')
-                input(type='text' class='form-control' placeholder='ISBN' name='isbn-input')
-              button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') Find book!
+            div(class='container')
+                div(class='row mb-4')
+                  div(class='col-md col-md-offset')
+                    form(name='isbn-form' action='/book')
+                      div(class='form-group')
+                        input(type='text' class='form-control' placeholder='ISBN' name='isbn-input')
+                      button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') Find book
       div(class='col')
   script(src='/javascripts/validate.js')

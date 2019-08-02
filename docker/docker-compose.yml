@@ -22,7 +22,7 @@ services:
       - '../app:/app:rw'
     depends_on:
       - library-db
-    command: bash -c 'DEV=true DOCKER=true nodemon > /var/log/library.log'
+    command: bash -c 'npm install && DEV=true DOCKER=true nodemon > /var/log/library.log'
   
   library-db:
     image: mysql:5.7

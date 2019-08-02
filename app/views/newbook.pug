@@ -1,4 +1,20 @@
 extends layout
 
 block content
-    p= info
+  div(class='container')
+    div(class='row')
+      div(class='col')
+      div(class='col')
+        div(class='card bg-dark mb-3 text-center')
+          img(src='/images/library.jpg' class='card-img-top' alt='An assortment of shelved books')
+          div(class='card-body')
+            div(class='container')
+              div(class='row')
+                div(class='col-md col-md-offset')
+                  form(name='book-add-form' action='/book/new')
+                    div(class='form-group')
+                      input(type='text' class='form-control' placeholder='Title' value=books[0].volumeInfo.title name='book-title-input')
+                      input(type='text' class='form-control' placeholder='Author' value=books[0].volumeInfo.authors name='book-title-input')
+                    button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') Add Book
+      div(class='col')
+  script(src='/javascripts/validate.js')

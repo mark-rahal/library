@@ -1,34 +1,52 @@
 extends layout
 
 block content
+  - var bookTitle = ''
+  - var authors = ['']
+  - var isbn10 = ''
+  - var isbn13 = ''
+  - var ddsNum = ''
   if info
-    - var bookTitle = info.title
-    - var authors = info.authors
-  else
-    - var bookTitle = ''
-    - var authors = ['']
+    - bookTitle = info.title
+    - authors = info.authors
+    - if (info.identifiers && info.identifiers.isbn_10) {isbn10 = info.identifiers.isbn_10[0]}
+    - if (info.identifiers && info.identifiers.isbn_13) {isbn13 = info.identifiers.isbn_13[0]}
+    - if (info.classifications && info.classifications.dewey_decimal_class) {ddsNum = info.classifications.dewey_decimal_class[0]}
+    
   div(class='container h-100')
     div(class='row align-items-center h-100')
       div(class='col')
       div(class='col')
         div(class='card bg-light')
-          div(class='card-body')
+          div(class='card-header')
             h1(class='display-1 text-center') Library
-            div(class='card-body')
-              div(class='container text-left')
-                div(class='row')
-                  div(class='col')
-                    if !info
-                      div(class='alert alert-danger' role='alert') Book not found! Please enter the book information manually.
-                    form(name='book-add-form' action='/book/new')
-                      div(class='form-group')
-                        label(for='title-input') Title
-                        input(type='text' id='title-input' class='form-control' placeholder='Title' value=bookTitle name='book-title-input') 
-                      div(class='form-group')
-                        label(for='author-input') Author(s)
-                        //add button to add author form for manual entries
-                        each bookAuthor in authors
-                          input(type='text' id='author-input' class='form-control' placeholder='Author' value=bookAuthor name='book-title-input')
-                      button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') Add Book
+          div(class='card-body')
+            div(class='container text-left')
+              div(class='row')
+                div(class='col')
+                  if !info
+                    div(class='alert alert-danger' role='alert') Book not found! Please enter the book information manually.
+                  form(name='book-add-form' action='/book')
+                    div(class='form-group')
+                      label(for='title-input') Title
+                      input(type='text' id='title-input' class='form-control' placeholder='Title' value=bookTitle name='book-title-input') 
+                    label(for='author-input') Author(s)
+                    div(class='form-group' id='author-input')
+                      //add button to add author form for manual entries
+                      each bookAuthor in authors
+                        input(type='text' class='form-control' placeholder='Author' value=bookAuthor.name name='book-author-input')
+                      button(type='button' class='btn btn-primary btn-sm' onclick='addAuthorForm()' id='add-author-button') Add Author
+                      button(type='button' class='btn btn-danger btn-sm' onclick='removeAuthorForm()' id='remove-author-button') Remove Author
+                    div(class='form-group')
+                      label(for='isbn-10-input') ISBN-10
+                      input(type='text' id='isbn-10-input' class='form-control' placeholder='ISBN-10' value=isbn10 name='isbn-10-input')
+                    div(class='form-group')
+                      label(for='isbn-13-input') ISBN-13
+                      input(type='text' id='isbn-13-input' class='form-control' placeholder='ISBN-13' value=isbn13 name='isbn-13-input')
+                    div(class='form-group')
+                      label(for='dds-input') Dewey Decimal Number
+                      input(type='text' id='dds-input' class='form-control' placeholder='Dewey Decimal Number' value=ddsNum name='dds-input')
+                    button(type='submit' class='btn btn-primary' formmethod='post') Add Book
       div(class='col')
   script(src='/javascripts/validate.js')
+  script(src='/javascripts/authorform.js')

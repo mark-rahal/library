@@ -6,15 +6,14 @@ block content
       div(class='col')
       div(class='col')
         div(class='card bg-light')
-          div(class='card-body')
+          div(class='card-header')
             h1(class='display-1 text-center') Library
-            div(class='card-body')
-              div(class='container text-left')
-                  div(class='row text-left')
-                    div(class='col-md col-md-offset')
-                      form(name='isbn-form' action='/book')
-                        div(class='form-group')
-                          input(type='text' class='form-control' placeholder='ISBN' name='isbn-input')
-                        button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') Find book
+          ul(class='list-group list-group-flush text-center')
+            li(class='list-group-item')
+              a(class='btn btn-primary' href='/getinfo' role='button') Add a book
+            li(class='list-group-item')
+              a(class='btn btn-primary' href='/search' role='button') Search for a book
+          if bookAddSuccess
+            div(class='alert alert-success text-center' role='alert') Book added succesfully!
       div(class='col')
   script(src='/javascripts/validate.js')

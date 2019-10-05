@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  div(class='container h-100')
+    div(class='row align-items-center h-100')
+      div(class='col')
+      div(class='col')
+        div(class='card bg-light')
+          div(class='card-header')
+            h1(class='display-1 text-center') Library
+          ul(class='list-group list-group-flush')
+            li(class='list-group-item')
+              label(for='isbn-search-form') Search for book
+              form(class='mb-3' name='isbn-search-form' action='/search')
+                div(class='form-group')
+                  input(type='text' class='form-control' placeholder='ISBN' name='isbn-input')
+                button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateISBN()') By ISBN
+              form(class='mb-3' name='title-search-form' action='/search')  
+                div(class='form-group')
+                  input(type='text' class='form-control' placeholder='Title' name='title-input')
+                button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateString()') By Title
+              form(class='mb-3' name='author-search-form' action='/search')
+                div(class='form-group')
+                  input(type='text' class='form-control' placeholder='Author' name='author-input')
+                button(type='submit' class='btn btn-primary' formmethod='post' onclick='return validateString()') By Author
+      div(class='col')
+  script(src='/javascripts/validate.js')

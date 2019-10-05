@@ -42,6 +42,7 @@ router.post('/search', function(req, res, next) {
     db.query('SELECT `Id` FROM `Book` WHERE (`ISBN-10` = ?) OR (`ISBN-13` = ?) OR (`Title` = ?) OR (`Author` = ?);', params, function(err, results, fields) {
       if (err) {
         console.log(err);
+        res.sendStatus(500);
       } else {
         res.render('searchresults', {results: results});
       }
@@ -52,6 +53,7 @@ router.post('/search', function(req, res, next) {
     db.query('SELECT `Id` FROM `Book` WHERE (`ISBN-10` = ?) OR (`ISBN-13` = ?) OR (`Title` = ?) OR (`Author` = ?);', params, function(err, results, fields) {
       if (err) {
         console.log(err);
+        res.sendStatus(500);
       } else {
         res.render('searchresults', {results: results});
       }
@@ -61,6 +63,7 @@ router.post('/search', function(req, res, next) {
     db.query('SELECT `AuthorOf` FROM `Author` WHERE (`Name` like ?);', db.escape('%' + searchFor + '%'), function(err, results, fields) {
       if (err) {
         console.log(err);
+        res.sendStatus(500);
       } else {
         res.render('searchresults', {results: results});
       }
